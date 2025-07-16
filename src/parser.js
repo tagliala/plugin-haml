@@ -1,7 +1,8 @@
-const { spawnSync } = require("child_process");
-const path = require("path");
+import { spawnSync } from "child_process";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const parser = path.join(__dirname, "./parser.rb");
+const parser = fileURLToPath(new URL("./parser.rb", import.meta.url));
 
 const parse = (text, _parsers, _opts) => {
   const child = spawnSync("ruby", [parser], { input: text });
@@ -24,7 +25,7 @@ const hasPragma = (text) => pragmaPattern.test(text);
 const locStart = (_node) => 0;
 const locEnd = (_node) => 0;
 
-module.exports = {
+export default {
   parse,
   astFormat: "haml",
   hasPragma,

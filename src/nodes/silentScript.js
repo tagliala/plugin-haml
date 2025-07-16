@@ -1,10 +1,5 @@
-const {
-  concat,
-  group,
-  hardline,
-  indent,
-  join
-} = require("prettier/doc").builders;
+import { builders } from "prettier/doc";
+const { group, hardline, indent, join } = builders;
 
 function findKeywordIndices(children, keywords) {
   const indices = [];
@@ -34,32 +29,28 @@ function silentScript(path, _opts, print) {
       const keywordIndices = findKeywordIndices(children, ["when", "else"]);
 
       parts.push(
-        concat(
-          scripts.map((script, index) => {
-            const concated = concat([hardline, script]);
+        scripts.map((script, index) => {
+          const concated = [hardline, script];
 
-            return keywordIndices.includes(index) ? concated : indent(concated);
-          })
-        )
+          return keywordIndices.includes(index) ? concated : indent(concated);
+        })
       );
     } else if (["if", "unless"].includes(value.keyword)) {
       const keywordIndices = findKeywordIndices(children, ["elsif", "else"]);
 
       parts.push(
-        concat(
-          scripts.map((script, index) => {
-            const concated = concat([hardline, script]);
+        scripts.map((script, index) => {
+          const concated = [hardline, script];
 
-            return keywordIndices.includes(index) ? concated : indent(concated);
-          })
-        )
+          return keywordIndices.includes(index) ? concated : indent(concated);
+        })
       );
     } else {
-      parts.push(indent(concat([hardline, join(hardline, scripts)])));
+      parts.push(indent([hardline, join(hardline, scripts)]));
     }
   }
 
-  return group(concat(parts));
+  return group(parts);
 }
 
-module.exports = silentScript;
+export default silentScript;

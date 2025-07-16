@@ -1,11 +1,12 @@
-const { haml } = require("./utils");
+import { describe, it, expect } from "vitest";
+import { haml } from "./utils";
 
 describe("haml comment", () => {
-  test("same line", () => {
+  it("same line", () => {
     expect("-# comment").toMatchFormat();
   });
 
-  test("multi line", () => {
+  it("multi line", () => {
     const content = haml(`
       -#
         this is
@@ -16,7 +17,7 @@ describe("haml comment", () => {
     expect(content).toMatchFormat();
   });
 
-  test("weird spacing same line", () => {
+  it("weird spacing same line", () => {
     expect("-#      foobar     ").toChangeFormat("-# foobar");
   });
 });

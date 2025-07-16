@@ -1,0 +1,11 @@
+plugins:
+  - rubocop-performance
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  DisplayStyleGuide: true
+  ExtraDetails: true
+
+Style/Documentation:
+  Enabled: false

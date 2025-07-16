@@ -1,10 +1,5 @@
-const {
-  concat,
-  group,
-  hardline,
-  indent,
-  join
-} = require("prettier/doc").builders;
+import { builders } from "prettier/doc";
+const { group, hardline, indent, join } = builders;
 
 // https://haml.info/docs/yardoc/file.REFERENCE.html#html-comments-
 function comment(path, _opts, print) {
@@ -22,12 +17,10 @@ function comment(path, _opts, print) {
   }
 
   if (children.length > 0) {
-    parts.push(
-      indent(concat([hardline, join(hardline, path.map(print, "children"))]))
-    );
+    parts.push(indent([hardline, join(hardline, path.map(print, "children"))]));
   }
 
-  return group(concat(parts));
+  return group(parts);
 }
 
-module.exports = comment;
+export default comment;

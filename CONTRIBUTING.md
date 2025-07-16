@@ -42,7 +42,7 @@ At this point, this is where `prettier`'s printer takes over. Because the remain
 
 For further understanding, below is a list of helpful resources.
 
-- [Prettier plugin documentation](https://prettier.io/docs/en/plugins.html) - documentation around `prettier`'s plugin system
+- [Prettier plugin documentation](https://prettier.io/docs/plugins.html) - documentation around `prettier`'s plugin system
 - [Builder commands](https://github.com/prettier/prettier/blob/master/commands.md) - the functions used to build the `prettier` IR
 - [Writing a Prettier plugin](https://medium.com/@fvictorio/how-to-write-a-plugin-for-prettier-a0d98c845e70) - a nice tutorial on how to build a `prettier` plugin
 

@@ -1,7 +1,8 @@
-const { haml } = require("./utils");
+import { describe, it, expect } from "vitest";
+import { haml } from "./utils";
 
 describe("filter", () => {
-  test("custom", () => {
+  it("custom", () => {
     const content = haml(`
       :python
         def foo:
@@ -11,7 +12,7 @@ describe("filter", () => {
     expect(content).toMatchFormat();
   });
 
-  test("css", () => {
+  it("css", () => {
     const content = haml(`
       :css
         .foo { height: 100px; width: 100px; }
@@ -28,7 +29,7 @@ describe("filter", () => {
     );
   });
 
-  test("javascript", () => {
+  it("javascript", () => {
     const content = haml(`
       :javascript
         1+1
@@ -42,7 +43,7 @@ describe("filter", () => {
     );
   });
 
-  test("less", () => {
+  it("less", () => {
     const content = haml(`
       :less
         .foo { .bar { height: 100px; } }
@@ -60,7 +61,7 @@ describe("filter", () => {
     );
   });
 
-  test("markdown", () => {
+  it("markdown", () => {
     const content = haml(`
       :markdown
         *Hello, world!*
@@ -74,7 +75,7 @@ describe("filter", () => {
     );
   });
 
-  test("scss", () => {
+  it("scss", () => {
     const content = haml(`
       :scss
         .foo { .bar { height: 100px; } }

@@ -2,4 +2,7 @@
 
 source 'https://rubygems.org'
 
-gem 'haml', '~> 5.1'
+gem 'haml'
+
+gem 'rubocop', require: false
+gem 'rubocop-performance', require: false

@@ -1,11 +1,12 @@
-const { haml } = require("./utils");
+import { describe, it, expect } from "vitest";
+import { haml } from "./utils";
 
 describe("comment", () => {
-  test("single line", () => {
+  it("single line", () => {
     expect("/ This is the peanutbutterjelly element").toMatchFormat();
   });
 
-  test("multi line", () => {
+  it("multi line", () => {
     const content = haml(`
       /
         %p This doesn't render, because it's commented out!
@@ -14,7 +15,7 @@ describe("comment", () => {
     expect(content).toMatchFormat();
   });
 
-  test("conditional", () => {
+  it("conditional", () => {
     const content = haml(`
       /[if IE]
         %h1 Get Firefox
@@ -23,7 +24,7 @@ describe("comment", () => {
     expect(content).toMatchFormat();
   });
 
-  test("revealed", () => {
+  it("revealed", () => {
     const content = haml(`
       /![if !IE]
         You are not using Internet Explorer, or are using version 10+.

@@ -1,7 +1,11 @@
-const prettier = require("prettier");
+import { expect } from "vitest";
+import prettier from "prettier";
 
-function checkFormat(before, after) {
-  const formatted = prettier.format(before, { parser: "haml", plugins: ["."] });
+async function checkFormat(before, after) {
+  const formatted = await prettier.format(before, {
+    parser: "haml",
+    plugins: ["./src/plugin.js"]
+  });
 
   return {
     pass: formatted === `${after}\n`,
@@ -10,10 +14,18 @@ function checkFormat(before, after) {
 }
 
 expect.extend({
-  toChangeFormat(before, after) {
-    return checkFormat(before, after);
+  async toChangeFormat(received, expected) {
+    const result = await checkFormat(received, expected);
+    return {
+      pass: result.pass,
+      message: result.message
+    };
   },
-  toMatchFormat(before) {
-    return checkFormat(before, before);
+  async toMatchFormat(received) {
+    const result = await checkFormat(received, received);
+    return {
+      pass: result.pass,
+      message: result.message
+    };
   }
 });

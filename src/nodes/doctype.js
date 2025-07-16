@@ -1,4 +1,5 @@
-const { join } = require("prettier/doc").builders;
+import { builders } from "prettier/doc";
+const { join } = builders;
 
 const types = {
   basic: "Basic",
@@ -29,4 +30,4 @@ function doctype(path, _opts, _print) {
   return join(" ", parts);
 }
 
-module.exports = doctype;
+export default doctype;

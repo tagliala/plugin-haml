@@ -1,11 +1,15 @@
+import { describe, it, expect } from "vitest";
+
 describe("plain", () => {
   const specialChars = ["%", ".", "#", "/", "!", "=", "&", "~", "-", "\\", ":"];
 
-  test.each(specialChars)("escapes starting %s", (specialChar) => {
-    expect(`\\${specialChar}`).toMatchFormat();
+  specialChars.forEach((specialChar) => {
+    it(`escapes starting ${specialChar}`, () => {
+      expect(`\\${specialChar}`).toMatchFormat();
+    });
   });
 
-  test("does not unnecessarily escape other characters", () => {
+  it("does not unnecessarily escape other characters", () => {
     expect("foo").toMatchFormat();
   });
 });

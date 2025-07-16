@@ -1,28 +1,19 @@
-const {
-  align,
-  concat,
-  fill,
-  group,
-  hardline,
-  ifBreak,
-  indent,
-  join,
-  line,
-  softline
-} = require("prettier/doc").builders;
+import { builders } from "prettier/doc";
+const { align, fill, group, hardline, ifBreak, indent, join, line, softline } =
+  builders;
 
 function getDynamicAttributes(header, attributes) {
   const pairs = attributes
     .slice(1, -2)
     .split(",")
     .map((pair) => pair.slice(1).split('" => '));
-  const parts = [concat([pairs[0][0], "=", pairs[0][1]])];
+  const parts = [[pairs[0][0], "=", pairs[0][1]]];
 
   pairs.slice(1).forEach((pair) => {
-    parts.push(line, concat([pair[0], "=", pair[1]]));
+    parts.push(line, [pair[0], "=", pair[1]]);
   });
 
-  return group(concat(["(", align(header + 1, fill(parts)), ")"]));
+  return group(["(", align(header + 1, fill(parts)), ")"]);
 }
 
 function getHashValue(value, opts) {
@@ -60,7 +51,7 @@ function getStaticAttributes(header, attributes, opts) {
     parts.push(",", line, getKeyValuePair(key, attributes[key], opts));
   });
 
-  return group(concat(["{", align(header + 1, fill(parts)), "}"]));
+  return group(["{", align(header + 1, fill(parts)), "}"]);
 }
 
 function getHeader(value, opts) {
@@ -120,12 +111,7 @@ function getHeader(value, opts) {
   if (value.value) {
     const prefix = value.parse ? "= " : ifBreak("", " ");
 
-    return group(
-      concat([
-        group(concat(parts)),
-        indent(concat([softline, prefix, value.value]))
-      ])
-    );
+    return group([group(parts), indent([softline, prefix, value.value])]);
   }
 
   // In case none of the other if statements have matched and we're printing a
@@ -134,7 +120,7 @@ function getHeader(value, opts) {
     parts.push("%div");
   }
 
-  return group(concat(parts));
+  return group(parts);
 }
 
 // https://haml.info/docs/yardoc/file.REFERENCE.html#element-name-
@@ -146,12 +132,10 @@ function tag(path, opts, print) {
     return header;
   }
 
-  return group(
-    concat([
-      header,
-      indent(concat([hardline, join(hardline, path.map(print, "children"))]))
-    ])
-  );
+  return group([
+    header,
+    indent([hardline, join(hardline, path.map(print, "children"))])
+  ]);
 }
 
-module.exports = tag;
+export default tag;

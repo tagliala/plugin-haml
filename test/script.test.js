@@ -1,11 +1,12 @@
-const { haml } = require("./utils");
+import { describe, it, expect } from "vitest";
+import { haml } from "./utils";
 
 describe("script", () => {
-  test("single line", () => {
+  it("single line", () => {
     expect('%p= "hello"').toMatchFormat();
   });
 
-  test("multi line", () => {
+  it("multi line", () => {
     const content = haml(`
       %p
         = ['hi', 'there', 'reader!'].join " "
@@ -15,7 +16,7 @@ describe("script", () => {
     expect(content).toMatchFormat();
   });
 
-  test("preserve", () => {
+  it("preserve", () => {
     expect('~ "Foo\\n<pre>Bar\\nBaz</pre>"').toMatchFormat();
   });
 });

@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-const fs = require("fs");
-const prettier = require("prettier");
+import fs from "node:fs";
+import prettier from "prettier";
 
 const code = fs.existsSync(process.argv[2])
   ? fs.readFileSync(process.argv[2], "utf-8")
   : process.argv.slice(2).join(" ").replace(/\\n/g, "\n");
 
-console.log(prettier.format(code, { parser: "haml", plugins: ["."] }));
+console.log(await prettier.format(code, { parser: "haml", plugins: ["./"] }));

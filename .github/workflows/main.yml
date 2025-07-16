@@ -1,7 +1,12 @@
 name: Main
+
 on:
-- push
-- pull_request
+  - push
+  - pull_request
+
+permissions:
+  contents: read
+
 jobs:
   ci:
     name: CI
@@ -9,50 +14,41 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby:
-        - "2.5"
-        - "2.6"
-        - head
-    env:
-      CI: true
+        ruby: ['3.2', '3.3', '3.4']
+        channel: ['stable']
+        include:
+          - ruby: 'head'
+            channel: 'experimental'
+
+    continue-on-error: ${{ matrix.channel != 'stable' }}
+
     steps:
-    - uses: actions/checkout@master
+      - uses: actions/checkout@v4
 
-    # Setup ruby dependencies
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-    - uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-${{ matrix.ruby }}-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-${{ matrix.ruby }}-
-    - name: bundle install
-      run: |
-        bundle config path vendor/bundle
-        bundle install --jobs 4 --retry 3
+      # Setup ruby dependencies
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
 
-    # Setup node dependencies
-    - uses: actions/setup-node@v2-beta
-      with:
-        node-version: 12.x
-    - id: yarn-cache
-      run: echo "::set-output name=directory::$(yarn cache dir)"
-    - uses: actions/cache@v1
-      with:
-        path: ${{ steps.yarn-cache.outputs.directory }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    - run: yarn install --frozen-lockfile
+      # Setup node dependencies
+      - uses: pnpm/action-setup@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install node dependencies
+        run: pnpm install
 
-    # Actually run tests and lint
-    - name: Lint and test
-      run: |
-        yarn lint
-        yarn print --check '**/*'
-        yarn test
+      # Actually run tests and lint
+      - name: Lint and test
+        run: |
+          bundle exec rubocop
+          pnpm lint
+          pnpm print --check '**/*'
+          pnpm test
+
   automerge:
     name: AutoMerge
     needs: ci

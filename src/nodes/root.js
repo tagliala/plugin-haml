@@ -1,8 +1,9 @@
-const { concat, hardline, join } = require("prettier/doc").builders;
+import { builders } from "prettier/doc";
+const { hardline, join } = builders;
 
 // The root node in the AST
 function root(path, _opts, print) {
-  return concat([join(hardline, path.map(print, "children")), hardline]);
+  return [join(hardline, path.map(print, "children")), hardline];
 }
 
-module.exports = root;
+export default root;

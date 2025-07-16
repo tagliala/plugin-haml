@@ -1,31 +1,32 @@
-const { long, haml } = require("./utils");
+import { describe, it, expect } from "vitest";
+import { long, haml } from "./utils";
 
 describe("tag", () => {
-  test("class", () => {
+  it("class", () => {
     expect("%p.foo").toMatchFormat();
   });
 
-  test("class multiple", () => {
+  it("class multiple", () => {
     expect("%p.foo.bar.baz").toMatchFormat();
   });
 
-  test("id", () => {
+  it("id", () => {
     expect("%p#foo").toMatchFormat();
   });
 
-  test("classes and id", () => {
+  it("classes and id", () => {
     expect("%p.foo.bar#baz").toMatchFormat();
   });
 
-  test("self closing", () => {
+  it("self closing", () => {
     expect("%br/").toMatchFormat();
   });
 
-  test("whitespace removal right single line", () => {
+  it("whitespace removal right single line", () => {
     expect('%p<= "Foo\\nBar"').toMatchFormat();
   });
 
-  test("whitespace removal right multi line", () => {
+  it("whitespace removal right multi line", () => {
     const content = haml(`
       %blockquote<
         %div
@@ -35,13 +36,13 @@ describe("tag", () => {
     expect(content).toMatchFormat();
   });
 
-  test("dynamic attributes", () => {
+  it("dynamic attributes", () => {
     const content = "%div{ data: { controller: 'lesson-evaluation' } }";
 
     expect(content).toMatchFormat();
   });
 
-  test("object reference", () => {
+  it("object reference", () => {
     const content = haml(`
       %div[@user, :greeting]
         %bar[290]/
@@ -51,7 +52,7 @@ describe("tag", () => {
     expect(content).toMatchFormat();
   });
 
-  test("long declaration before text", () => {
+  it("long declaration before text", () => {
     const declaration = `%button{ data: { current: ${long} } }`;
 
     expect(`${declaration} foo`).toChangeFormat(`${declaration}\n  foo`);

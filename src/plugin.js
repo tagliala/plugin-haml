@@ -1,8 +1,8 @@
-const embed = require("./embed");
-const parser = require("./parser");
-const printer = require("./printer");
+import embed from "./embed.js";
+import parser from "./parser.js";
+import printer from "./printer.js";
 
-module.exports = {
+export default {
   languages: [
     {
       name: "HAML",

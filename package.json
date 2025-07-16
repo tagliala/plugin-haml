@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "description": "prettier plugin for the HAML template language",
   "main": "src/plugin.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint --cache .",
-    "print": "prettier --plugin=.",
-    "test": "jest"
+    "test": "vitest run",
+    "print": "prettier --plugin=./src/plugin.js",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -18,16 +20,17 @@
     "url": "https://github.com/prettier/plugin-haml/issues"
   },
   "homepage": "https://github.com/prettier/plugin-haml#readme",
+  "packageManager": "pnpm@10.10.0",
   "dependencies": {
-    "prettier": ">=1.10"
+    "prettier": "^3.6.2"
   },
   "devDependencies": {
-    "all-contributors-cli": "^6.19.0",
-    "eslint": "^7.12.1",
-    "eslint-config-prettier": "^6.15.0",
-    "husky": "^4.3.0",
-    "jest": "^26.6.1",
-    "pretty-quick": "^3.1.0"
+    "all-contributors-cli": "^6.26.1",
+    "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
+    "husky": "^9.1.7",
+    "pretty-quick": "^4.2.2",
+    "vitest": "^3.2.4"
   },
   "eslintConfig": {
     "extends": [
@@ -49,18 +52,10 @@
       ]
     }
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "./test/setupTests.js"
-    ],
-    "testRegex": ".test.js$"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "prettier": {
     "trailingComma": "none"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

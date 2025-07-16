@@ -1,11 +1,12 @@
-const { haml } = require("./utils");
+import { describe, it, expect } from "vitest";
+import { haml } from "./utils";
 
 describe("silent script", () => {
-  test("single line", () => {
+  it("single line", () => {
     expect('- foo = "hello"').toMatchFormat();
   });
 
-  test("multi line with case", () => {
+  it("multi line with case", () => {
     const content = haml(`
       - case foo
       - when 1
@@ -20,7 +21,7 @@ describe("silent script", () => {
     expect(content).toMatchFormat();
   });
 
-  test("multi line with if/else", () => {
+  it("multi line with if/else", () => {
     const content = haml(`
       - if foo
         %span bar
@@ -34,7 +35,7 @@ describe("silent script", () => {
     expect(content).toMatchFormat();
   });
 
-  test("multi line with unless/else", () => {
+  it("multi line with unless/else", () => {
     const content = haml(`
       - unless foo
         %span bar

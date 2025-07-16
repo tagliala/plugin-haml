@@ -1,7 +1,8 @@
-const doc = require("prettier/doc");
+import { builders } from "prettier/doc";
+import { utils } from "prettier/doc";
 
-const { concat, hardline, indent, literalline, markAsRoot } = doc.builders;
-const { mapDoc, stripTrailingHardline } = doc.utils;
+const { hardline, indent, literalline, markAsRoot } = builders;
+const { mapDoc, stripTrailingHardline } = utils;
 
 // Get the name of the parser that is represented by the given element node,
 // return null if a matching parser cannot be found
@@ -39,16 +40,12 @@ function getParser(name, opts) {
 function replaceNewlines(doc) {
   return mapDoc(doc, (currentDoc) =>
     typeof currentDoc === "string" && currentDoc.includes("\n")
-      ? concat(
-          currentDoc
-            .split(/(\n)/g)
-            .map((v, i) => (i % 2 === 0 ? v : literalline))
-        )
+      ? currentDoc.split(/(\n)/g).map((v, i) => (i % 2 === 0 ? v : literalline))
       : currentDoc
   );
 }
 
-function embed(path, _print, textToDoc, opts) {
+function embed(path, opts) {
   const node = path.getValue();
   if (node.type !== "filter") {
     return null;
@@ -59,20 +56,15 @@ function embed(path, _print, textToDoc, opts) {
     return null;
   }
 
-  return markAsRoot(
-    concat([
+  return async (textToDoc) => {
+    const doc = await textToDoc(node.value.text, { parser });
+
+    return markAsRoot([
       ":",
       node.value.name,
-      indent(
-        concat([
-          hardline,
-          replaceNewlines(
-            stripTrailingHardline(textToDoc(node.value.text, { parser }))
-          )
-        ])
-      )
-    ])
-  );
+      indent([hardline, replaceNewlines(stripTrailingHardline(doc))])
+    ]);
+  };
 }
 
-module.exports = embed;
+export default embed;

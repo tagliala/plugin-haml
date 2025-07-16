@@ -1,13 +1,23 @@
+import comment from "./nodes/comment.js";
+import doctype from "./nodes/doctype.js";
+import filter from "./nodes/filter.js";
+import haml_comment from "./nodes/hamlComment.js";
+import plain from "./nodes/plain.js";
+import root from "./nodes/root.js";
+import script from "./nodes/script.js";
+import silent_script from "./nodes/silentScript.js";
+import tag from "./nodes/tag.js";
+
 const nodes = {
-  comment: require("./nodes/comment"),
-  doctype: require("./nodes/doctype"),
-  filter: require("./nodes/filter"),
-  haml_comment: require("./nodes/hamlComment"),
-  plain: require("./nodes/plain"),
-  root: require("./nodes/root"),
-  script: require("./nodes/script"),
-  silent_script: require("./nodes/silentScript"),
-  tag: require("./nodes/tag")
+  comment,
+  doctype,
+  filter,
+  haml_comment,
+  plain,
+  root,
+  script,
+  silent_script,
+  tag
 };
 
 const genericPrint = (path, opts, print) => {
@@ -20,4 +30,4 @@ const genericPrint = (path, opts, print) => {
   return nodes[type](path, opts, print);
 };
 
-module.exports = genericPrint;
+export default genericPrint;

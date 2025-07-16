@@ -1,29 +1,31 @@
+import { describe, it, expect } from "vitest";
+
 describe("doctype", () => {
-  test("basic", () => {
+  it("basic", () => {
     expect("!!! Basic").toMatchFormat();
   });
 
-  test("frameset", () => {
+  it("frameset", () => {
     expect("!!! Frameset").toMatchFormat();
   });
 
-  test("mobile", () => {
+  it("mobile", () => {
     expect("!!! Mobile").toMatchFormat();
   });
 
-  test("rdfa", () => {
+  it("rdfa", () => {
     expect("!!! RDFa").toMatchFormat();
   });
 
-  test("strict", () => {
+  it("strict", () => {
     expect("!!! Strict").toMatchFormat();
   });
 
-  test("xml", () => {
+  it("xml", () => {
     expect("!!! XML").toMatchFormat();
   });
 
-  test("encoding", () => {
+  it("encoding", () => {
     expect("!!! XML iso-8859-1").toMatchFormat();
   });
 });

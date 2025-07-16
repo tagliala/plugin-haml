@@ -1,6 +1,6 @@
-const long = Array(80).fill("a").join("");
+export const long = Array(80).fill("a").join("");
 
-const haml = (code) => {
+export const haml = (code) => {
   const lines = code.split("\n");
 
   const indent = lines[1].split("").findIndex((char) => /[^\s]/.test(char));
@@ -8,5 +8,3 @@ const haml = (code) => {
 
   return content.map((line) => line.slice(indent)).join("\n");
 };
-
-module.exports = { long, haml };

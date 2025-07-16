@@ -1,10 +1,5 @@
-const {
-  concat,
-  group,
-  hardline,
-  indent,
-  join
-} = require("prettier/doc").builders;
+import { builders } from "prettier/doc";
+const { group, hardline, indent, join } = builders;
 
 // https://haml.info/docs/yardoc/file.REFERENCE.html#inserting_ruby
 function script(path, opts, print) {
@@ -24,12 +19,10 @@ function script(path, opts, print) {
   parts.push(" ", value.text.trim());
 
   if (children.length > 0) {
-    parts.push(
-      indent(concat([hardline, join(hardline, path.map(print, "children"))]))
-    );
+    parts.push(indent([hardline, join(hardline, path.map(print, "children"))]));
   }
 
-  return group(concat(parts));
+  return group(parts);
 }
 
-module.exports = script;
+export default script;
